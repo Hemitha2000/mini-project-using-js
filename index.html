@@ -1,79 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS mini Project</title>
-      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Memory Card Game</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap:20px;
+     margin-bottom: 30px;
+}
+
+header h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    /* margin-bottom: 10px; */
+}
+
+#restartBtn {
+    padding: 10px 20px;
+    border: none;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#restartBtn i {
+    margin-right: 5px;
+}
+
+
+#restartBtn:hover {
+    background: #e0e0e0;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 15px;
+    justify-content: center;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background: #ffffff22;
+    border-radius: 12px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card.flip .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.card-back {
+    background: #fff;
+}
+
+.card-front {
+    background: #333;
+    transform: rotateY(180deg);
+    color: #fff;
+}
+div#win {
+    position: absolute;
+    background: #47b21b;
+    color: #fff;
+    padding: 10px;
+    border-radius: 3px;
+    width: 160px;
+    text-align: center;
+    text-transform: uppercase;
+    box-shadow: -1px -2px 5px 1px #565454;
+    display: none;
+}
+div#win span {
+    position: absolute;
+    top: -8px;
+    right: -9px;
+    font-size: 20px;
+    color: red;
+    background: #fff5f5;
+    border-radius: 50%;
+    line-height: 0px;
+    cursor: pointer;
+}
+@media (max-width: 600px) {
+    .game-container {
+        grid-template-columns: repeat(3, 90px);
+    }
+
+    .card {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+    </style>
 </head>
 <body>
-        <div class="flex justify-center items-center min-h-screen min-w-screen bg-green-200">
-            <div class="bg-white rounded-xl shadow-[-2px_-1px_4px_#0d9142] w-1/2 h-[710px]">
-                <div class="flex items-center justify-between border-b border-green-500 p-3">
-                    <h1 class="text-xl uppercase text-blue-500"><i class="fa-solid fa-spa"></i> <b>Fortune Cards</b> </h1>
-                    <button class="py-2 px-4 bg-red-200 border border-red-500 rounded"><i class="text-[20px] fa-solid fa-arrows-rotate text-red-500"></i></button>
-                </div>
-                <div class="flex flex-wrap gap-2 p-3">
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
 
-                     </div>   
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
+    <header>
+        <h1>Memory Game</h1>
+        <button id="restartBtn" class="restartBtnGame"><i class="fa-solid fa-arrow-rotate-right"></i>Restart</button>
+    </header>
 
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>   
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>   
-                     <div class="w-[calc(0.95/6*100%)] h-[200px]  bg-[#feffcf] rounded shadow-[1px_0px_1px_#9b9595]  ">
-
-                     </div>
-                 
-                    
-                </div>
-            </div>
-        </div>
+    <div class="game-container" id="gameBoard"></div>
+    <div id="win">you won <span class="restartBtnGame">
+        <i class="fa-solid fa-circle-xmark" ></i>
+    </span></div>
+    <script src="script.js"></script>
 </body>
 </html>
